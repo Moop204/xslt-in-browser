@@ -1,13 +1,7 @@
-import {
-  Card,
-  Container,
-  Divider,
-  Grid,
-  makeStyles,
-  Typography,
-} from "@material-ui/core";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Card, Divider, Grid, makeStyles, Typography } from "@material-ui/core";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import "./App.css";
+import { applyTransform } from "./utility/applyTransform";
 const format = require("xml-formatter");
 
 const defaultDocument = `<?xml version="1.0"?>
@@ -37,11 +31,6 @@ const defaultTransform = `<?xml version="1.0"?>
 
 </xsl:stylesheet>`;
 
-//styled component Li
-// const ColGrid = styled.Grid`
-//   height: "100vh";
-// `;
-
 const useStyles = makeStyles({
   column: {
     flex: 1,
@@ -52,26 +41,9 @@ const useStyles = makeStyles({
 });
 
 function App() {
-  const applyTransform = (document: string, transform: string) => {
-    const parser = new DOMParser();
-    const xsltProcessor = new XSLTProcessor();
-    const documentSource = parser.parseFromString(
-      document as string,
-      "text/xml"
-    );
-    const transformSource = parser.parseFromString(
-      transform as string,
-      "text/xml"
-    );
-    xsltProcessor.importStylesheet(transformSource);
-    const resultDocument = xsltProcessor.transformToDocument(documentSource);
-
-    // Obtain result as a string
-    const serializer = new XMLSerializer();
-    return serializer.serializeToString(resultDocument.documentElement);
-  };
-
-  const [document, setDocument] = useState(format(defaultDocument as string));
+  const [document, setDocument] = useState(
+    format(defaultDocument as string) as string
+  );
   const [transform, setTransform] = useState(defaultTransform);
 
   const [transformed, setTransformed] = useState(
@@ -89,8 +61,14 @@ function App() {
     const file: File = e.target.files[0];
     const reader = new FileReader();
     reader.onload = (e) => {
-      const formattedXml = format(e.target?.result as string);
-      stateUpdate(formattedXml);
+      if (e.target) {
+        try {
+          const formattedXml = format(e.target.result as string);
+          stateUpdate(formattedXml);
+        } catch {
+          stateUpdate("Invalid XSLT file provided.");
+        }
+      }
     };
     reader.readAsText(file);
   };

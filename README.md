@@ -1,5 +1,9 @@
 # xslt-in-browser
-How to apply an xsl stylesheet to an xml document where everything is a string and you don't have to search around for scattered sources of information.
+How to apply an xsl stylesheet to an xml document where everything is a string and you don't have to search around for scattered sources of information. 
+
+Deep dive based on [this answer](https://stackoverflow.com/a/36786053) from stack overflow.
+
+
 
 ```javascript
 
@@ -26,3 +30,4 @@ TODO:
 Add sources of information
 Link to which libraries this should be used with 
 Github pages
+Example based off Mozilla example.

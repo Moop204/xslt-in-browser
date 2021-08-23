@@ -1,0 +1,10 @@
+[default]
+name=Default
+runtime=host
+config-opts=
+run-opts=
+prefix=/home/moop204/.cache/gnome-builder/install/frontend-example/host
+app-id=
+postbuild=
+prebuild=
+default=true
