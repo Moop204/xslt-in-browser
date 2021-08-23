@@ -1,5 +1,14 @@
+import {
+  Card,
+  Container,
+  Divider,
+  Grid,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import "./App.css";
+const format = require("xml-formatter");
 
 const defaultDocument = `<?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="example.xsl"?>
@@ -28,6 +37,20 @@ const defaultTransform = `<?xml version="1.0"?>
 
 </xsl:stylesheet>`;
 
+//styled component Li
+// const ColGrid = styled.Grid`
+//   height: "100vh";
+// `;
+
+const useStyles = makeStyles({
+  column: {
+    flex: 1,
+  },
+  inputSpacing: {
+    height: "22px",
+  },
+});
+
 function App() {
   const applyTransform = (document: string, transform: string) => {
     const parser = new DOMParser();
@@ -48,7 +71,7 @@ function App() {
     return serializer.serializeToString(resultDocument.documentElement);
   };
 
-  const [document, setDocument] = useState(defaultDocument);
+  const [document, setDocument] = useState(format(defaultDocument as string));
   const [transform, setTransform] = useState(defaultTransform);
 
   const [transformed, setTransformed] = useState(
@@ -66,42 +89,55 @@ function App() {
     const file: File = e.target.files[0];
     const reader = new FileReader();
     reader.onload = (e) => {
-      stateUpdate(e.target?.result as string);
+      const formattedXml = format(e.target?.result as string);
+      stateUpdate(formattedXml);
     };
     reader.readAsText(file);
   };
 
+  const style = useStyles();
   return (
-    <div className="App">
-      <header className="App-header">
-        XML Transformation Document
-        <input
-          type="file"
-          id="document-input"
-          onInput={(e) => {
-            handleReadingFile(e, setDocument);
-          }}
-        />
-        <br />
-        {document}
-        <br />
-        Transform
-        <input
-          type="file"
-          id="document-input"
-          onInput={(e) => {
-            handleReadingFile(e, setTransform);
-          }}
-        />
-        <br />
-        {transform}
-        <br />
-        Result
-        <br />
-        {transformed}
-        <br />
-      </header>
-    </div>
+    <Grid container direction="row" spacing={2}>
+      <Grid item container style={{ height: "100vh" }} xs={4}>
+        <Card className={style.column}>
+          <Typography variant="h3">XML Document</Typography>
+          <Divider />
+          <input
+            type="file"
+            id="document-input"
+            onInput={(e) => {
+              handleReadingFile(e, setDocument);
+            }}
+          />
+          <Divider />
+          <div style={{ whiteSpace: "pre-wrap" }}>{document}</div>
+        </Card>
+      </Grid>
+
+      <Grid item container style={{ height: "100vh" }} xs={4}>
+        <Card className={style.column}>
+          <Typography variant="h3">XSLT Transform</Typography>
+          <Divider />
+          <input
+            type="file"
+            id="transform-input"
+            onInput={(e) => {
+              handleReadingFile(e, setTransform);
+            }}
+          />
+          <Divider />
+          <div style={{ whiteSpace: "pre-wrap" }}>{transform}</div>
+        </Card>
+      </Grid>
+      <Grid item container style={{ height: "100vh" }} xs={4}>
+        <Card className={style.column}>
+          <Typography variant="h3">Transformation</Typography>
+          <Divider />
+          <div className={style.inputSpacing} />
+          <div style={{ whiteSpace: "pre-wrap" }}>{transformed}</div>
+        </Card>
+      </Grid>
+    </Grid>
   );
 }
 
