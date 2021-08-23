@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/Moop204/xslt-in-browser/static/css/main.8c8b27cf.chunk.css",
-    "main.js": "/Moop204/xslt-in-browser/static/js/main.dd7cab1f.chunk.js",
-    "main.js.map": "/Moop204/xslt-in-browser/static/js/main.dd7cab1f.chunk.js.map",
+    "main.js": "/Moop204/xslt-in-browser/static/js/main.60ebb80d.chunk.js",
+    "main.js.map": "/Moop204/xslt-in-browser/static/js/main.60ebb80d.chunk.js.map",
     "runtime-main.js": "/Moop204/xslt-in-browser/static/js/runtime-main.ac976c46.js",
     "runtime-main.js.map": "/Moop204/xslt-in-browser/static/js/runtime-main.ac976c46.js.map",
     "static/js/2.1b4c2dd4.chunk.js": "/Moop204/xslt-in-browser/static/js/2.1b4c2dd4.chunk.js",
@@ -15,6 +15,6 @@
     "static/js/runtime-main.ac976c46.js",
     "static/js/2.1b4c2dd4.chunk.js",
     "static/css/main.8c8b27cf.chunk.css",
-    "static/js/main.dd7cab1f.chunk.js"
+    "static/js/main.60ebb80d.chunk.js"
   ]
 }
